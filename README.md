@@ -5,8 +5,39 @@ Genetic parameters for fertility traits of Arctic (superior) charr
 **Data structure**
 
 -546 cross records (full-records, egg count and eyed embryos count)
+```
+library(brms)
+
+fertility_model <- brm(
+  # Response model for the proportion of eyed eggs (Id added as residual term)
+  bf(perc_eye ~ FemaleFertility * MaleFertility,
+     FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + (1|Year) + (1|Id),
+     MaleFertility ~ 1 + (1|gr(Sire, cov = A_full)) + Year + (1|Id),
+     # could also add an embryo survival coefficient modelled as a non-liner function of inbreeding
+     nl = TRUE
+  ),
+  
+  family = zero_one_inflated_beta(),
+  
+  data = eggs_corrected,
+  data2 = list(A_full = A_full),
+  
+  prior = c(
+    prior(normal(0.5, 0.3), class = "b", nlpar = "FemaleFertility", lb = 0, ub = 1),
+    prior(normal(0.5, 0.3), class = "b", nlpar = "MaleFertility", lb = 0, ub = 1),
+    prior(exponential(1), class = "sd", nlpar = "FemaleFertility"),
+    prior(exponential(1), class = "sd", nlpar = "MaleFertility")
+  ),
+  
+  cores = 6, chains = 3, iter = 60000, warmup = 20000,
+  control = list(adapt_delta = 0.95, max_treedepth = 15)
+)
+```
 
 -1083 sperm analysis records (363 from 2020 and 720 from 2024) : selected variables to analyze are log(concentration), curvilinear velocity and straightness (only for 2024).
+```
+sperm_trait ~ year(fixed) + day_of_sampling(covariate) + animal + residual
+```
 
 
 **current struggles in preliminary analysis**
