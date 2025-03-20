@@ -1,0 +1,29 @@
+DATAFILE
+pheno.dat
+TRAITS
+2 3 4
+FIELDS_PASSED TO OUTPUT
+
+WEIGHT(S)
+
+RESIDUAL_VARIANCE
+0.154 10.239 3.357    
+10.239 2139.3 575.93    
+3.357 575.93 226.17
+EFFECT
+5 5 0 cross numer
+EFFECT
+6 6 6 cov
+EFFECT
+1 1 1 cross alpha
+RANDOM
+animal
+FILE
+data.ped
+FILE_POS
+1 2 3 0 0
+#SNP_FILE
+#snp_file
+PED_DEPTH
+5
+OPTION missing -999
