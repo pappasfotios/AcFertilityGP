@@ -33,6 +33,35 @@ fertility_model <- brm(
   control = list(adapt_delta = 0.95, max_treedepth = 15)
 )
 ```
+**OR**
+```
+fertility_model <- brm(
+  bf(
+    perc_eye ~ FemaleFertility * (1 - exp(-Capacity / n_eggs)),
+    
+    FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + (1|Year) + (1|Id),
+    Capacity ~ 1 + boost + (1|gr(Sire, cov = A_full)) + (1|Year) + (1|Id),
+    
+    nl = TRUE
+  ),
+  
+  family = zero_one_inflated_beta(),
+  
+  data = eggs_corrected,
+  data2 = list(A_full = A_full),
+  
+  prior = c(
+    prior(normal(0.5, 0.3), class = "b", nlpar = "FemaleFertility", lb = 0, ub = 1),
+    prior(exponential(1), class = "sd", nlpar = "FemaleFertility"),
+    
+    prior(normal(2000, 1000), class = "b", nlpar = "Capacity", lb = 0),
+    prior(exponential(0.01), class = "sd", nlpar = "Capacity")  # weak prior to allow variability
+  ),
+  
+  cores = 6, chains = 3, iter = 60000, warmup = 20000,
+  control = list(adapt_delta = 0.95, max_treedepth = 15)
+)
+```
 
 -1083 sperm analysis records (363 from 2020 and 720 from 2024) : selected variables to analyze are log(concentration), curvilinear velocity and straightness (only for 2024).
 ```
