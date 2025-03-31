@@ -4,7 +4,7 @@ Genetic parameters for fertility traits of Arctic (superior) charr
 
 **Data structure**
 
--546 cross records (full-records, egg count and eyed embryos count)
+## 546 cross records (full-records, egg count and eyed embryos count)
 ```
 library(brms)
 
@@ -63,50 +63,44 @@ fertility_model <- brm(
 )
 ```
 
--1083 sperm analysis records (363 from 2020 and 720 from 2024) : selected variables to analyze are log(concentration), curvilinear velocity and straightness (only for 2024).
+![Untitled (11)](https://github.com/user-attachments/assets/f0f92cf3-4865-4af9-a1d6-276b492bd190)
+
+
+**Current struggles in preliminary analysis of cross data**
+
+struggle 1: missing parents. When filtering out totally invalid entries the data set consists of ~700 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
+
+possible approaches I have tried: 1) work with 546 clean records. 2) work with the 700 data-points by assigning phantoms (cannot assess the effect of this). 
+
+
+struggle 2: priors for fertility parameters. Truncated normal seems promissing but also other options such as beta and normal (inverse logit link) have been tested.
+
+struggle 3: year as fixed or random effect. 8 years, including 2 where the boost solution was used (strong intercept for male fertrility in all models). Treating it as fixed will probably reduce complexity and overparameterization.
+
+struggle 4: for 2025, number of spawned eggs is missing for some of the failed families.
+
+solution 4: use annual mean or "impute" from e.g. female length, weight, Kf, Year. Should not be very critical either way for 0 observations.
+
+
+## 1083 sperm analysis records (363 from 2020 and 720 from 2024) : selected variables to analyze are log(concentration), curvilinear velocity and straightness (only for 2024).
 ```
 sperm_trait ~ year(fixed) + day_of_sampling(covariate) + animal + residual
 ```
 
 
-**current struggles in preliminary analysis**
+**Current struggles in preliminary analysis of CASA data**
 
-While single-step yields more or less expected variance components for sperm traits,
+struggle 1: --While single-step yields more or less expected variance components for sperm traits,
 VCE using only additive relationships from pedigree yields very high heritability estimates (~0.6-0.95) and correlations in the case of multitrait analysis including both years or only 2024. 
-In a univariate fashion that pattern breaks when including data from both years but persists in the case of 2024.
+In a univariate fashion that pattern breaks when including data from both years but persists in the case of 2024.--
 
-Example output:
-```
-h2  - Function: g_3_3_1_1/(g_3_3_1_1+r_1_1)
-  Mean:   0.69330    
-  Sample Mean:   0.69119    
-  Sample SD:   0.51365E-01
-  
-h2  - Function: g_3_3_2_2/(g_3_3_2_2+r_2_2)
-  Mean:   0.83571    
-  Sample Mean:   0.83410    
-  Sample SD:   0.36757E-01
-  
-h2  - Function: g_3_3_3_3/(g_3_3_3_3+r_3_3)
-  Mean:   0.96017    
-  Sample Mean:   0.96008    
-  Sample SD:   0.13189E-01
-  
-rg12  - Function: g_3_3_1_2/((g_3_3_1_1*g_3_3_2_2)^0.5)
-  Mean:   0.91496    
-  Sample Mean:   0.91613    
-  Sample SD:   0.24162E-01
-  
-rg13  - Function: g_3_3_1_3/((g_3_3_1_1*g_3_3_3_3)^0.5)
-  Mean:   0.93371    
-  Sample Mean:   0.93478    
-  Sample SD:   0.19944E-01
-  
-rg23  - Function: g_3_3_2_3/((g_3_3_2_2*g_3_3_3_3)^0.5)
-  Mean:   0.96322    
-  Sample Mean:   0.96393    
-  Sample SD:   0.10933E-01
-```
+solution 1: Year should be coded as cross alpha and not cross numer.
+
+
+struggle 2: CASA values from 2020 seem a bit odd... there are no 0s at all for VCL but a lot of decimal values close to it. From last 2 years I know that 0s are in fact not uncommon at all... Cross-check.
+
+struggle 3: Martin mentioned that but have not given it a lot of thought. The boost solution introducices a scale problem or dispersion as well?
+
 
 
 
