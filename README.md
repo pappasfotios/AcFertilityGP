@@ -2,9 +2,7 @@
 Genetic parameters for fertility traits of Arctic (superior) charr
 
 
-**Data structure**
-
-## 546 cross records (full-records, egg count and eyed embryos count)
+## Part 1: data from cross success over multiple genarations (full-records, egg count and eyed embryos count)
 ```
 library(brms)
 
@@ -82,7 +80,7 @@ struggle 4: for 2025, number of spawned eggs is missing for some of the failed f
 solution 4: use annual mean or "impute" from e.g. female length, weight, Kf, Year. Should not be very critical either way for 0 observations.
 
 
-## 1083 sperm analysis records (363 from 2020 and 720 from 2024) : selected variables to analyze are log(concentration), curvilinear velocity and straightness (only for 2024).
+## Part 2: sperm analysis records (363 from 2020 and 720 from 2024). Selected variables to analyze are log(concentration + 1), curvilinear velocity and straightness of path.
 ```
 sperm_trait ~ year(fixed) + day_of_sampling(covariate) + animal + residual
 ```
