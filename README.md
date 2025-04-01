@@ -66,9 +66,9 @@ fertility_model <- brm(
 
 **Current struggles in preliminary analysis of cross data**
 
-struggle 1: missing parents. When filtering out totally invalid entries the data set consists of ~700 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
+struggle 1: missing parents. When filtering out totally invalid entries the data set consists of 624 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
 
-possible approaches I have tried: 1) work with 546 clean records. 2) work with the 700 data-points by assigning phantoms (cannot assess the effect of this). 
+possible approaches I have tried: 1) work with 546 clean records. 2) work with the 624 data-points by assigning phantoms (cannot assess the effect of this). 
 
 
 struggle 2: priors for fertility parameters. Truncated normal seems promissing but also other options such as beta and normal (inverse logit link) have been tested.
@@ -80,10 +80,13 @@ struggle 4: for 2025, number of spawned eggs is missing for some of the failed f
 solution 4: use annual mean or "impute" from e.g. female length, weight, Kf, Year. Should not be very critical either way for 0 observations.
 
 
+
+
 ## Part 2: sperm analysis records (363 from 2020 and 720 from 2024). Selected variables to analyze are log(concentration + 1), curvilinear velocity and straightness of path.
 ```
 sperm_trait ~ year(fixed) + day_of_sampling(covariate) + animal + residual
 ```
+![image](https://github.com/user-attachments/assets/fe3bdef3-1418-4da1-a529-ad0ba95e100e)
 
 
 **Current struggles in preliminary analysis of CASA data**
