@@ -66,21 +66,21 @@ fertility_model <- brm(
 
 **Current struggles in preliminary analysis of cross data**
 
-struggle 1: missing parents. When filtering out totally invalid entries the data set consists of 624 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
+**struggle 1:** missing parents. When filtering out totally invalid entries the data set consists of 624 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
 
-possible approaches I have tried: 1) work with 546 clean records. 2) work with the 624 data-points by assigning phantoms (cannot assess the effect of this). 
-
-
-struggle 2: priors for fertility parameters. Truncated normal seems promissing but also other options such as beta and normal (inverse logit link) have been tested.
-
-struggle 3: year as fixed or random effect. 8 years, including 2 where the boost solution was used (strong intercept for male fertrility in all models). Treating it as fixed will probably reduce complexity and overparameterization.
-
-struggle 4: for 2025, number of spawned eggs is missing for some of the failed families.
-
-solution 4: use annual mean or "impute" from e.g. female length, weight, Kf, Year. Should not be very critical either way for 0 observations.
+**possible approaches I have tried:** 1) work with 546 clean records. 2) work with the 624 data-points by assigning phantoms (cannot assess the effect of this). 
 
 
+**struggle 2:** priors for fertility parameters. Truncated normal seems promissing but also other options such as beta and normal (inverse logit link) have been tested.
 
+**struggle 3:** year as fixed or random effect. 8 years, including 2 where the boost solution was used (strong intercept for male fertrility in all models). Treating it as fixed will probably reduce complexity and overparameterization.
+
+**struggle 4:** for 2025, number of spawned eggs is missing for some of the failed families.
+
+**solution 4:** use annual mean or "impute" from e.g. female length, weight, Kf, Year. Should not be very critical either way for 0 observations.
+
+<br>
+<br>
 
 ## Part 2: sperm analysis records (363 from 2020 and 720 from 2024). Selected variables to analyze are log(concentration + 1), curvilinear velocity and straightness of path.
 ```
@@ -91,16 +91,16 @@ sperm_trait ~ year(fixed) + day_of_sampling(covariate) + animal + residual
 
 **Current struggles in preliminary analysis of CASA data**
 
-struggle 1: --While single-step yields more or less expected variance components for sperm traits,
+**struggle 1:** --While single-step yields more or less expected variance components for sperm traits,
 VCE using only additive relationships from pedigree yields very high heritability estimates (~0.6-0.95) and correlations in the case of multitrait analysis including both years or only 2024. 
 In a univariate fashion that pattern breaks when including data from both years but persists in the case of 2024.--
 
-solution 1: Year should be coded as cross alpha and not cross numer.
+**solution 1:** Year should be coded as cross alpha and not cross numer.
 
 
-struggle 2: CASA values from 2020 seem a bit odd... there are no 0s at all for VCL but a lot of decimal values close to it. From last 2 years I know that 0s are in fact not uncommon at all... Cross-check.
+**struggle 2:** CASA values from 2020 seem a bit odd... there are no 0s at all for VCL but a lot of decimal values close to it. From last 2 years I know that 0s are in fact not uncommon at all... Cross-check.
 
-struggle 3: Martin mentioned that but have not given it a lot of thought. The boost solution introducices a scale problem or dispersion as well?
+**struggle 3:** Martin mentioned that but have not given it a lot of thought. The boost solution introducices a scale problem or dispersion as well?
 
 
 
