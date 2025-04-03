@@ -102,7 +102,7 @@ In a univariate fashion that pattern breaks when including data from both years 
 
 **struggle 3:** Martin mentioned that but have not given it a lot of thought. The boost solution introducices a scale problem or dispersion as well?
 
-
+**struggle - fun fact 4:** Presence of replicates. Apparently we have recaptured a few males more than once, likely because the stuff accidentally returned them to the sampling tank. I should probably only keep the first occurance (?)
 
 
 
