@@ -110,6 +110,7 @@ FP: Ok, I agree.
 **struggle - fun fact 5:** Presence of replicates. Apparently we have recaptured a few males more than once, likely because the stuff accidentally returned them to the sampling tank. I should probably only keep the first occurance (?)
 
 CP: Probably the first measurement. Would be interesting to see whether recordings vary a lot.
-FP: Would repeated measures enhance power? An autoregressive term might be necessary in this case.
+
+FP: Would repeated measures enhance power? Shall we include an autoregressive term in this case?
 
 
