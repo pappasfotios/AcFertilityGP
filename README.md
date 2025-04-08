@@ -113,4 +113,4 @@ CP: Probably the first measurement. Would be interesting to see whether recordin
 
 FP: Would repeated measures enhance power? Shall we include an autoregressive term in this case?
 
-
+CP: You can try if you want. But I don't will help much in our case.
