@@ -27,8 +27,8 @@ FILE
 data.ped
 FILE_POS
 1 2 3 0 0
-SNP_FILE
-snp_file
+#SNP_FILE
+#snp_file
 PED_DEPTH
 5
 OPTION missing -999
