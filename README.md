@@ -7,11 +7,11 @@ Genetic parameters for fertility traits of Arctic (superior) charr
 library(brms)
 
 fertility_model <- brm(
-  # Response model for the proportion of eyed eggs (Id added as residual term)
+  # Response model for the proportion of eyed eggs (e_proxy (row) added as residual term, female and male permanent environments also added)
   bf(perc_eye ~ FemaleFertility * MaleFertility,
-     FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + (1|Year) + (1|Id),
-     MaleFertility ~ 1 + (1|gr(Sire, cov = A_full)) + Year + (1|Id),
-     # could also add an embryo survival coefficient modelled as a non-liner function of inbreeding
+     FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1|e_proxy),
+     MaleFertility ~ 1 + (1|gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1|e_proxy),
+     # have also tried an embryo survival coefficient modelled as a non-liner function of inbreeding but yields a possitive correlation
      nl = TRUE
   ),
   
@@ -37,8 +37,8 @@ fertility_model <- brm(
   bf(
     perc_eye ~ FemaleFertility * (1 - exp(-Capacity / n_eggs)),
     
-    FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + (1|Year) + (1|Id),
-    Capacity ~ 1 + boost + (1|gr(Sire, cov = A_full)) + (1|Year) + (1|Id),
+    FemaleFertility ~ 1 + (1 | gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1 | e_proxy),
+    Capacity ~ 1 + boost + (1 | gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1 | e_proxy),
     
     nl = TRUE
   ),
@@ -53,7 +53,7 @@ fertility_model <- brm(
     prior(exponential(1), class = "sd", nlpar = "FemaleFertility"),
     
     prior(normal(2000, 1000), class = "b", nlpar = "Capacity", lb = 0),
-    prior(exponential(0.01), class = "sd", nlpar = "Capacity")  # weak prior to allow variability
+    prior(exponential(0.01), class = "sd", nlpar = "Capacity")
   ),
   
   cores = 6, chains = 3, iter = 60000, warmup = 20000,
