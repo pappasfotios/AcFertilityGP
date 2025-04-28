@@ -69,6 +69,7 @@ fertility_model <- brm(
 **struggle 1:** missing parents. When filtering out totally invalid entries the data set consists of 624 crosses where at least one of the parents is valid (correspond to pedigree entries). When strict, the data-set consists of 546 crosses where both breeders are valid.
 
 **possible approaches I have tried:** 1) work with 546 clean records. 2) work with the 624 data-points by assigning phantoms (cannot assess the effect of this). 
+**final solution:** I took option 3 XD. Only kept phantom dams. My line of thought was that I can probably afford given the (for the most part) 2 dams to 1 sire breeding scheme.
 
 
 **struggle 2:** priors for fertility parameters. Truncated normal seems promissing but also other options such as beta and normal (inverse logit link) have been tested.
