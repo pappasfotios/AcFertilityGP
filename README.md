@@ -118,3 +118,6 @@ CP: You can try if you want. But I don't will help much in our case.
 
 ![image](https://github.com/user-attachments/assets/8db04171-6d9c-470f-8377-07fb8c20e851)
 
+![Obs_vs_latent_EBVs](https://github.com/user-attachments/assets/327f4641-de9f-4883-a70a-00af1c6f942e)
+
+
