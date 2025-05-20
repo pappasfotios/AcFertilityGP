@@ -7,28 +7,26 @@ Genetic parameters for fertility traits of Arctic (superior) charr
 library(brms)
 
 fertility_model <- brm(
-  # Response model for the proportion of eyed eggs (e_proxy (row) added as residual term, female and male permanent environments also added)
   bf(perc_eye ~ FemaleFertility * MaleFertility,
-     FemaleFertility ~ 1 + (1|gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1|e_proxy),
-     MaleFertility ~ 1 + (1|gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1|e_proxy),
-     # have also tried an embryo survival coefficient modelled as a non-liner function of inbreeding but yields a possitive correlation
+     FemaleFertility ~ 1 + (1 | gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1 | e_proxy),
+     MaleFertility ~ 1 + boost + (1 | gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1 | e_proxy),
      nl = TRUE
   ),
-  
+
   family = zero_one_inflated_beta(),
-  
+
   data = eggs_corrected,
-  data2 = list(A_full = A_full),
-  
+  data2 = list(A_full = Ap),
+
   prior = c(
     prior(normal(0.5, 0.3), class = "b", nlpar = "FemaleFertility", lb = 0, ub = 1),
     prior(normal(0.5, 0.3), class = "b", nlpar = "MaleFertility", lb = 0, ub = 1),
-    prior(exponential(1), class = "sd", nlpar = "FemaleFertility"),
-    prior(exponential(1), class = "sd", nlpar = "MaleFertility")
+    
+    prior(normal(0, 1), class = "sd", nlpar = "FemaleFertility", lb = 0),
+    prior(normal(0, 1), class = "sd", nlpar = "MaleFertility", lb = 0)
   ),
-  
-  cores = 6, chains = 3, iter = 60000, warmup = 20000,
-  control = list(adapt_delta = 0.95, max_treedepth = 15)
+  cores = 3, chains = 1, iter = 500000, warmup = 200000, thin = 150,
+  control = list(adapt_delta = 0.98, max_treedepth = 15)
 )
 ```
 **OR**
@@ -37,8 +35,9 @@ fertility_model <- brm(
   bf(
     perc_eye ~ FemaleFertility * (1 - exp(-Capacity / n_eggs)),
     
-    FemaleFertility ~ 1 + (1 | gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1 | e_proxy),
-    Capacity ~ 1 + boost + (1 | gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1 | e_proxy),
+    FemaleFertility ~ 1 + (1 | gr(Dam, cov = A_full)) + Year + (1 | fpe) + (1 | e_proxy),   
+    Capacity ~ 1 + boost + (1 | gr(Sire, cov = A_full)) + Year + (1 | mpe) + (1 | e_proxy), 
+    #Survival ~ 1 + s(Inb) + (1 | e_proxy),
     
     nl = TRUE
   ),
@@ -46,18 +45,19 @@ fertility_model <- brm(
   family = zero_one_inflated_beta(),
   
   data = eggs_corrected,
-  data2 = list(A_full = A_full),
+  data2 = list(A_full = Ap),
   
   prior = c(
     prior(normal(0.5, 0.3), class = "b", nlpar = "FemaleFertility", lb = 0, ub = 1),
-    prior(exponential(1), class = "sd", nlpar = "FemaleFertility"),
+    prior(normal(0, 1), class = "sd", nlpar = "FemaleFertility", lb = 0),
     
-    prior(normal(2000, 1000), class = "b", nlpar = "Capacity", lb = 0),
-    prior(exponential(0.01), class = "sd", nlpar = "Capacity")
+    # Capacity prior
+    prior(normal(12000, 6000), class = "b", nlpar = "Capacity", lb = 0),
+    prior(normal(0, 4000), class = "sd", nlpar = "Capacity", lb = 0)
   ),
   
-  cores = 6, chains = 3, iter = 60000, warmup = 20000,
-  control = list(adapt_delta = 0.95, max_treedepth = 15)
+  cores = 3, chains = 1, iter = 500000, warmup = 200000, thin = 150,
+  control = list(adapt_delta = 0.98, max_treedepth = 15)
 )
 ```
 
