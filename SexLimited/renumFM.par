@@ -1,0 +1,33 @@
+DATAFILE
+combinedFM.dat
+TRAITS
+2 3 4 5
+FIELDS_PASSED TO OUTPUT
+
+WEIGHT(S)
+
+RESIDUAL_VARIANCE
+50 40 1 1 
+40 300 1 1
+1 1 0.6 0.1
+1 1 0.1 0.2
+EFFECT
+7 7 7 7 cross alpha
+EFFECT
+0 2 0 0 cov
+EFFECT
+0 0 6 0 cov
+EFFECT
+1 1 1 1 cross alpha
+RANDOM
+animal
+FILE
+../data.ped
+FILE_POS
+1 2 3 0 0
+#SNP_FILE
+#../snp_file
+PED_DEPTH
+5
+OPTION missing -999
+OPTION blksize 4
