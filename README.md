@@ -1,5 +1,5 @@
 # AcFertilityGP
-Genetic parameters for fertility traits of Arctic (superior) charr
+This project aims to estimate genetic parameters for observed and latent fertility traits of Arctic (superior) charr. It includes a multi-trait model to analyze sperm phenotypes together with growth, and a second multivariate model to evaluate female and male gamete outputs and respective body sizes. Additionally, a sophisticated Bayesian framework is presented to account for distinct female and male genetic contributions to overall reproductive success outcomes.
 
 
 ![Untitled (11)](https://github.com/user-attachments/assets/f0f92cf3-4865-4af9-a1d6-276b492bd190)
