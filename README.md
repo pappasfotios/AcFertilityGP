@@ -1,4 +1,4 @@
-# AcFertilityGP
+# Variance components of observed and latent fertility in farmed Arctic charr
 This project aims to estimate genetic parameters for observed and latent fertility traits of Arctic (superior) charr. It includes a multi-trait model to analyze sperm phenotypes together with growth ([Sperm_traits](https://github.com/pappasfotios/AcFertilityGP/tree/main/Sperm_traits)), and a second multivariate model to evaluate female and male gamete outputs and respective body sizes ([SexLimited](https://github.com/pappasfotios/AcFertilityGP/tree/main/SexLimited)). Additionally, a sophisticated Bayesian framework is presented to account for distinct female and male genetic contributions to overall reproductive success outcomes ([FertRate_Models](https://github.com/pappasfotios/AcFertilityGP/tree/main/FertRate_Models)).
 
 Preprint available: [Pappas et al.](https://www.biorxiv.org/content/10.1101/2025.10.16.682826v1)
